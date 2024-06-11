@@ -92,18 +92,18 @@ public class _ApplyViterbiService {
 
 
                 cnt = moreConnectedVertices.size();
-                System.out.println("cnt : " + cnt);
-                System.out.println((1.00) / cnt);
+                //System.out.println("cnt : " + cnt);
+                //System.out.println((1.00) / cnt);
                 for(int i = 0; i < initialClosestSegments.size(); i++){
                     double ep =  0.0;
                     Integer currClosestSegment = initialClosestSegments.get(i);
                     if(moreConnectedVertices.contains(currClosestSegment)){
-                        System.out.println("a");
+                        //System.out.println("a");
                         ep = (1.00 / cnt);
-                        System.out.println(ep);
+                        //System.out.println(ep);
                     }
                     else{
-                        System.out.println("b");
+                        //System.out.println("b");
                         ep = 0.0;
                     }
                     viterbi[0][segmentToState.get(currClosestSegment)] = ep;

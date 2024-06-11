@@ -61,7 +61,7 @@ public class _MappingWithoutViterbiService {
                         currNearestSegmentID = segment.getH_ID();
                         boolean isConnected = _ConnectionOrIntersectionService.connectionExist(_NewViterbiService.most_likely_path, currNearestSegmentID, segmentGraph);
                         if(isConnected){
-                            List<List<Double>> currSegmentData = segmentMapping.get(_NewViterbiService.most_likely_path);
+                            List<List<Double>> currSegmentData = segmentMapping.get(currNearestSegmentID);
                             Point nearestPointOnCurrSegment = findNearestPointFromRoad(new Point(currObs.get(0), currObs.get(1)), currSegmentData);
                             _NewViterbiService.nearestPointsFromSegments.add(nearestPointOnCurrSegment);
                             _NewViterbiService.distanceFromPoint.add(Point.haversineDistance(nearestPointOnCurrSegment, nearestPointOnMLP));
@@ -78,11 +78,11 @@ public class _MappingWithoutViterbiService {
                                     return nearestPointOnMLP;
                                 }
                             }
-                            else{
-                                _NewViterbiService.distanceFromPoint.clear();
-                                _NewViterbiService.nearestPointsFromSegments.clear();
-                                return null;
-                            }
+//                            else{
+//                                _NewViterbiService.distanceFromPoint.clear();
+//                                _NewViterbiService.nearestPointsFromSegments.clear();
+//                                return null;
+//                            }
                         }
                     }
                 }

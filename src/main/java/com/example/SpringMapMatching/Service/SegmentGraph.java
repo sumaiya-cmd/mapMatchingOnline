@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class SegmentGraph {
+public class SegmentGraph{
 
     @Autowired
     private Data data; // Autowire your Data repository

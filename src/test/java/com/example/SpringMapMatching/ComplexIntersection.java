@@ -24,37 +24,42 @@ class ComplexIntersection {
     @Test
     void mapMatchingTest() throws Exception {
         List<Double[]> input = new ArrayList<>();
-        input.add(new Double[] {77.22875297069551, 12.71802067421573});
-        input.add(new Double[] {77.22892999649049, 12.71835557344501});
-        input.add(new Double[] {77.2292733192444, 12.718617213160481});
-        input.add(new Double[] {77.2293484210968, 12.718993973877012});
-        input.add(new Double[] {77.22962200641634, 12.719145724563207});
-        input.add(new Double[] {77.22973465919496, 12.719611441619902});
-        input.add(new Double[] {77.22997069358827, 12.719669002095692});
-        input.add(new Double[] {77.23027646541597, 12.720061459537135});
-        input.add(new Double[] {77.23029792308809, 12.72052194216141});
-        input.add(new Double[] {77.230641245842, 12.72064229543687});
-        input.add(new Double[] {77.23077535629274, 12.721071380563185});
-        input.add(new Double[] {77.23100066184999, 12.721312086535955});
-        input.add(new Double[] {77.23112404346467, 12.721662679609631});
-        input.add(new Double[] {77.23131716251375, 12.721772566891246});
-        input.add(new Double[] {77.2313815355301, 12.722091763010866});
-        input.add(new Double[] {77.23149955272676, 12.722295839008101});
-        input.add(new Double[] {77.23179459571838, 12.72263596530548});
-        input.add(new Double[] {77.23200917243959, 12.722745852165671});
-        input.add(new Double[] {77.23212718963623, 12.723169701037797});
-        input.add(new Double[] {77.23245441913606, 12.723436568482976});
-        input.add(new Double[] {77.23254024982454, 12.723797623991508});
-        input.add(new Double[] {77.23283529281616, 12.72389704498336});
-        input.add(new Double[] {77.23296940326692, 12.724451708749324});
-        input.add(new Double[] {77.23312497138978, 12.72470287684828});
-        input.add(new Double[] {77.23346829414369, 12.724859856783876});
-        input.add(new Double[] {77.23367214202882, 12.725199979644474});
-        input.add(new Double[] {77.23369359970094, 12.725513938803426});
-        input.add(new Double[] {77.23397791385652, 12.725822664930874});
-        input.add(new Double[] {77.2342085838318, 12.72596917889381});
-        input.add(new Double[] {77.23447680473329, 12.726293602367766});
-        input.add(new Double[] {77.23463773727418, 12.7266860495640});
+        input.add(new Double[] {76.69775605201723, 12.410476812445179});
+        input.add(new Double[] {76.69801622629167, 12.410660179748557});
+        input.add(new Double[] {76.69816911220552, 12.410827829741494});
+        input.add(new Double[] {76.69843196868898, 12.410990240569193});
+        input.add(new Double[] {76.6985821723938, 12.411333398597769});
+        input.add(new Double[] {76.69886380434038, 12.411592731464362});
+        input.add(new Double[] {76.69900327920915, 12.411920171583457});
+        input.add(new Double[] {76.69918030500413, 12.412224035645565});
+        input.add(new Double[] {76.69949144124986, 12.41255409448357});
+        input.add(new Double[] {76.6996791958809, 12.412708645700372});
+        input.add(new Double[] {76.69964700937273, 12.412923445544221});
+        input.add(new Double[] {76.69975429773332, 12.413114669646339});
+        input.add(new Double[] {76.70000106096269, 12.413318991134444});
+        input.add(new Double[] {76.69999837875368, 12.41356784401232});
+        input.add(new Double[] {76.70017808675767, 12.413769545644037});
+        input.add(new Double[] {76.70018881559373, 12.414044593071774});
+        input.add(new Double[] {76.70037925243379, 12.414217479877586});
+        input.add(new Double[] {76.70051872730257, 12.414479429364569});
+        input.add(new Double[] {76.70050799846649, 12.41470208622122});
+        input.add(new Double[] {76.70072793960573, 12.414793768400955});
+        input.add(new Double[] {76.7006528377533, 12.415173594230067});
+        input.add(new Double[] {76.70081645250322, 12.415275754186075});
+        input.add(new Double[] {76.70086473226549, 12.415587472778318});
+        input.add(new Double[] {76.70102834701538, 12.41580227024646});
+        input.add(new Double[] {76.7010819911957, 12.416106129776656});
+        input.add(new Double[] {76.70125097036363, 12.416244962030122});
+        input.add(new Double[] {76.7012643814087, 12.41652000684189});
+        input.add(new Double[] {76.70140117406847, 12.416561918406748});
+        input.add(new Double[] {76.70161306858064, 12.416994131025431});
+        input.add(new Double[] {76.70164257287979, 12.417208927332554});
+        input.add(new Double[] {76.7018035054207, 12.417384431500654});
+        input.add(new Double[] {76.70202881097795, 12.417719722716605});
+        input.add(new Double[] {76.7019832134247, 12.417913562753741});
+        input.add(new Double[] {76.70207172632219, 12.418091685903804});
+        input.add(new Double[] {76.70222461223602, 12.418267189476516});
+
 
 
 
@@ -70,7 +75,7 @@ class ComplexIntersection {
             System.out.println(jsonResponse);
             // Parse the response to List<Point>
             List<Point> apiResult = objectMapper.readValue(jsonResponse, new TypeReference<>() {});
-            if (apiResult != null && apiResult.size() >= 15) {
+            if (apiResult != null) {
                 for (int i = actual.size(); i < apiResult.size(); i++) {
                     Double[] pointAsArray = new Double[]{apiResult.get(i).getLongitude(), apiResult.get(i).getLatitude()};
                     actual.add(pointAsArray);
@@ -79,37 +84,42 @@ class ComplexIntersection {
         }
 
         List<Double[]> expected = new ArrayList<>() ;
-        expected.add(new Double[] {77.22881570566172, 12.718063683273206});
-        expected.add(new Double[] {77.22893891624236, 12.71824885619105});
-        expected.add(new Double[] {77.22918533798001, 12.718619201758486});
-        expected.add(new Double[] {77.22943176048622, 12.718989546968231});
-        expected.add(new Double[] {77.22955348007946, 12.719175772342657});
-        expected.add(new Double[] {77.22979691984037, 12.719548222827855});
-        expected.add(new Double[] {77.22991864000807, 12.719734447938622});
-        expected.add(new Double[] {77.23016208091796, 12.720106897896478});
-        expected.add(new Double[] {77.23038661185569, 12.720440273449368});
-        expected.add(new Double[] {77.23061114342259, 12.720773648706597});
-        expected.add(new Double[] {77.23083567561866, 12.721107023668154});
-        expected.add(new Double[] {77.23094794195265, 12.72127371103805});
-        expected.add(new Double[] {77.23118185191767, 12.721654561696486});
-        expected.add(new Double[] {77.23129880718554, 12.721844986900889});
-        expected.add(new Double[] {77.23141576264365, 12.722035412022077});
-        expected.add(new Double[] {77.231532718292, 12.722225837060044});
-        expected.add(new Double[] {77.23187340050453, 12.722688089032498});
-        expected.add(new Double[] {77.23199598785774, 12.722854420323213});
-        expected.add(new Double[] {77.23224586856526, 12.723219323118421});
-        expected.add(new Double[] {77.23237547498702, 12.723402151011658});
-        expected.add(new Double[] {77.23263468842305, 12.723767806508086});
-        expected.add(new Double[] {77.2327642954373, 12.723950634111267});
-        expected.add(new Double[] {77.23308215652627, 12.724430640868562});
-        expected.add(new Double[] {77.23318811050851, 12.724590642988385});
-        expected.add(new Double[] {77.2334000189019, 12.724910647029105});
-        expected.add(new Double[] {77.23360619179296, 12.725220989744741});
-        expected.add(new Double[] {77.23381236522334, 12.7255313322096});
-        expected.add(new Double[] {77.23405916815841, 12.725882942760968});
-        expected.add(new Double[] {77.2341825698977, 12.726058747904657});
-        expected.add(new Double[] {77.23441520745952, 12.726365745797187});
-        expected.add(new Double[] {77.23463367909115, 12.726628131275893});
+        expected.add(new Double[] {76.69775999131707, 12.4103783167397});
+        expected.add(new Double[] {76.69807200150898, 12.410650810929273});
+        expected.add(new Double[] {76.69822152664301, 12.410819685496389});
+        expected.add(new Double[] {76.6983710519735, 12.410988559953914});
+        expected.add(new Double[] {76.69862071998806, 12.411300699756698});
+        expected.add(new Double[] {76.69882100530882, 12.41158723050829});
+        expected.add(new Double[] {76.69899694040569, 12.411861086162979});
+        expected.add(new Double[] {76.69928518798542, 12.412222528327211});
+        expected.add(new Double[] {76.69952549863635, 12.412544803004575});
+        expected.add(new Double[] {76.6995922723601, 12.4126831350247});
+        expected.add(new Double[] {76.69968338432045, 12.412871885732264});
+        expected.add(new Double[] {76.69977449642639, 12.413060636389588});
+        expected.add(new Double[] {76.69995672107508, 12.413438137553497});
+        expected.add(new Double[] {76.70004783361784, 12.413626888060083});
+        expected.add(new Double[] {76.70013894630621, 12.41381563851642});
+        expected.add(new Double[] {76.7002300591402, 12.414004388922503});
+        expected.add(new Double[] {76.7003211721198, 12.414193139278343});
+        expected.add(new Double[] {76.70050339851588, 12.41457063983925});
+        expected.add(new Double[] {76.70059451193237, 12.414759390044322});
+        expected.add(new Double[] {76.70068562549449, 12.414948140199138});
+        expected.add(new Double[] {76.7007246203805, 12.415179595361714});
+        expected.add(new Double[] {76.70079874322714, 12.41535252841419});
+        expected.add(new Double[] {76.70087286618441, 12.415525461431523});
+        expected.add(new Double[] {76.70102111243082, 12.41587132736078});
+        expected.add(new Double[] {76.70111428510607, 12.416054903426948});
+        expected.add(new Double[] {76.70120745792507, 12.416238479441683});
+        expected.add(new Double[] {76.70130063088783, 12.416422055404977});
+        expected.add(new Double[] {76.70139380399435, 12.41660563131683});
+        expected.add(new Double[] {76.70158315207853, 12.416985320553618});
+        expected.add(new Double[] {76.70167932707177, 12.417181433874372});
+        expected.add(new Double[] {76.7017755022244, 12.417377547139495});
+        expected.add(new Double[] {76.70196708140845, 12.417744665350225});
+        expected.add(new Double[] {76.70206248541574, 12.417915670299559});
+        expected.add(new Double[] {76.70215788955826, 12.418086675196985});
+        expected.add(new Double[] {76.70225329383602, 12.418257680042505});
+
 
         Assertions.assertEquals(convert(expected) , convert(actual));
     }

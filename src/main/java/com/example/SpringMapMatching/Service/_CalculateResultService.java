@@ -2,6 +2,9 @@ package com.example.SpringMapMatching.Service;
 
 import com.example.SpringMapMatching.Controller.ViterbiController;
 import com.example.SpringMapMatching.Model.Point;
+import org.jgrapht.GraphPath;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultEdge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,24 +27,24 @@ public class _CalculateResultService {
     public List<Point> calculateResult(double[][] viterbi, int[][] backpointer, Map<Integer, Integer> segmentToState, Point[][] closestPoints, List<Double[]> gpsCoordinates) {
         //System.out.println(gpsCoordinates.size());
         //System.out.println(gpsCoordinates.get(0)[0] + " " + gpsCoordinates.get(0)[1]);
-        for(int k = 0; k < viterbi.length; k++){
-            for(int l = 0; l < viterbi[k].length; l++){
-                System.out.print(viterbi[k][l] + " ");
-            }
-            System.out.println("");
-        }
-        System.out.println(viterbi.length);
-
-        for(int k = 0; k < stateToSegmentID.size(); k++){
-            System.out.print(stateToSegmentID + " ");
-        }
-
-        for(int k = 0; k < viterbi.length; k++){
-            for(int l = 0; l < viterbi[k].length; l++){
-                System.out.print(stateToSegmentID.get(backpointer[k][l]) + " ");
-            }
-            System.out.println("");
-        }
+//        for(int k = 0; k < viterbi.length; k++){
+//            for(int l = 0; l < viterbi[k].length; l++){
+//                System.out.print(viterbi[k][l] + " ");
+//            }
+//            System.out.println("");
+//        }
+//        System.out.println(viterbi.length);
+//
+//        for(int k = 0; k < stateToSegmentID.size(); k++){
+//            System.out.print(stateToSegmentID + " ");
+//        }
+//
+//        for(int k = 0; k < viterbi.length; k++){
+//            for(int l = 0; l < viterbi[k].length; l++){
+//                System.out.print(stateToSegmentID.get(backpointer[k][l]) + " ");
+//            }
+//            System.out.println("");
+//        }
         double maxProb = Double.NEGATIVE_INFINITY;
         int maxState = -1;
 
@@ -182,8 +185,21 @@ public class _CalculateResultService {
         }
 
         Set<Integer> moreConnectedVertices = _ApplyViterbiService.getVerticesAtDistance(segmentGraph, currSegment, 4);
+        DijkstraShortestPath<Integer, DefaultEdge> dijkstraAlg = new DijkstraShortestPath<>(SegmentGraph.getGraph());
+
         if(moreConnectedVertices.contains(prevSegment)){
-            return true;
+            GraphPath<Integer, DefaultEdge> path = dijkstraAlg.getPath(prevSegment, currSegment);
+            List<Integer> pathList = path.getVertexList();
+
+            for(int i = 0; i < pathList.size() - 1; i++) {
+                int curr = pathList.get(i);
+                int next = pathList.get(i + 1);
+
+                boolean isIntersectionCheck = _ConnectionOrIntersectionService.intersectionExist(curr, next, roadGraph);
+                if (isIntersectionCheck) {
+                    return true;
+                }
+            }
         }
         return false;
     }
