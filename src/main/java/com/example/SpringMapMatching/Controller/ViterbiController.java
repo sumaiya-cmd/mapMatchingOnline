@@ -40,16 +40,14 @@ public class ViterbiController {
 
         if(_NewViterbiService.isBeginning){
             observations.add(gpsCoordinates);
-            if(observations.size() == 15){
+            if(observations.size() == 5){
                result.addAll(viterbiService.process(observations));
                 if(!_NewViterbiService.checkIntersectionInsideWindow)
                 {
                     observations.clear();
                 }
                 else{
-                    //System.out.println("AA " + _NewViterbiService.isIntersection);
                     observations.subList(0, _NewViterbiService.makeWindow).clear();
-                    //System.out.println("BB : " + observations.size());
                 }
                return result;
             }
@@ -59,14 +57,14 @@ public class ViterbiController {
         }
         else{
             if(_NewViterbiService.isIntersection){
+                //System.out.println("new window formation from intersection");
                 observations.add(gpsCoordinates);
-                System.out.println("--" + observations.size() + " " +_NewViterbiService.extendedWindow);
+                //System.out.println("--" + observations.size() + " " +_NewViterbiService.extendedWindow);
 
                 if(observations.size() == _NewViterbiService.extendedWindow){
                     List<Point> newResult = viterbiService.process(observations);
 
                     if(newResult != null){
-                        //_NewViterbiService.isIntersection = false;
                         result.addAll(newResult);
 
                         if(!_NewViterbiService.checkIntersectionInsideWindow)
@@ -75,8 +73,8 @@ public class ViterbiController {
                         }
                         else{
                             observations.subList(0, _NewViterbiService.makeWindow).clear();
-                            System.out.println("----------" + observations.size());
-                            System.out.println(_NewViterbiService.isIntersection);
+                            //System.out.println("----------" + observations.size());
+                            //System.out.println(_NewViterbiService.isIntersection);
                         }
                         return result;
                     }
@@ -87,21 +85,6 @@ public class ViterbiController {
                 else{
                     return result;
                 }
-//                if(observations.size() == 8){
-//
-//                    result.addAll(viterbiService.process(observations));
-//                    if(!_NewViterbiService.checkIntersectionInsideWindow)
-//                    {
-//                        observations.clear();
-//                    }
-//                    else{
-//                        observations.subList(0, _NewViterbiService.makeWindow).clear();
-//                    }
-//                    return result;
-//                }
-//                else{
-//                    return result;
-//                }
             }
             else{
                 //System.out.println(gpsCoordinates[0] + " " + gpsCoordinates[1]);
@@ -111,6 +94,8 @@ public class ViterbiController {
                 if(newResult != null){
                     result.addAll(newResult);
                     observations.clear();
+                    //System.out.println(newResult.get(newResult.size() - 1));
+                    //System.out.println("recieving till intersection...");
                     return result;
                 }
                 else{
@@ -120,21 +105,6 @@ public class ViterbiController {
             }
         }
     }
-
-//    @PostMapping("/api/map-matching")
-//    public String mapMatching(@RequestBody CoordinatesDto coordinates) {
-//        double latitude = coordinates.getLatitude();
-//        double longitude = coordinates.getLongitude();
-//
-//        // Perform map matching or any processing with the coordinates
-//        // For example, you can call a map matching service or algorithm here
-//
-//        // Return the mapped coordinates as a response (for demonstration, just echoing back)
-//        System.out.println(latitude+" "+longitude);
-//        Double[] obs = {longitude, latitude};
-//        observations.add(obs);
-//        return "Mapped Coordinates: Latitude " + latitude + ", Longitude " + longitude;
-//    }
 
     @GetMapping("/processCoordinates")
     public List<List<Point>> processCoordinatesAndSend() {
@@ -156,6 +126,7 @@ public class ViterbiController {
     @PostMapping("/clearData")
     public ResponseEntity<Map<String, String>> clearData(@RequestBody Map<String, String> requestBody) {
         Map<String, String> response = new HashMap<>();
+        System.out.println("data cleared ------------------------");
         if (requestBody.containsKey("data") && "clear".equals(requestBody.get("data"))) {
             // Logic to clear data
             _NewViterbiService.isIntersection = false;
@@ -164,10 +135,15 @@ public class ViterbiController {
             result.clear();
             _NewViterbiService.checkWindowExtention = false;
             _NewViterbiService.checkIntersectionInsideWindow = false;
-            _NewViterbiService.extendedWindow = 15;
+            _NewViterbiService.extendedWindow = 5;
             observations.clear();
             _NewViterbiService.distanceFromPoint.clear();
             _NewViterbiService.nearestPointsFromSegments.clear();
+            _NewViterbiService.uturn = false;
+            _NewViterbiService.visited.clear();
+            _NewViterbiService.prev_MLP = -1;
+            _NewViterbiService.countOfVisited = 0;
+            _NewViterbiService.leftPath.clear();
             response.put("message", "Data cleared successfully");
             return ResponseEntity.ok(response);
         } else {
@@ -178,3 +154,34 @@ public class ViterbiController {
 
 }
 
+
+//                if(observations.size() == 8){
+//
+//                    result.addAll(viterbiService.process(observations));
+//                    if(!_NewViterbiService.checkIntersectionInsideWindow)
+//                    {
+//                        observations.clear();
+//                    }
+//                    else{
+//                        observations.subList(0, _NewViterbiService.makeWindow).clear();
+//                    }
+//                    return result;
+//                }
+//                else{
+//                    return result;
+//                }
+
+//    @PostMapping("/api/map-matching")
+//    public String mapMatching(@RequestBody CoordinatesDto coordinates) {
+//        double latitude = coordinates.getLatitude();
+//        double longitude = coordinates.getLongitude();
+//
+//        // Perform map matching or any processing with the coordinates
+//        // For example, you can call a map matching service or algorithm here
+//
+//        // Return the mapped coordinates as a response (for demonstration, just echoing back)
+//        System.out.println(latitude+" "+longitude);
+//        Double[] obs = {longitude, latitude};
+//        observations.add(obs);
+//        return "Mapped Coordinates: Latitude " + latitude + ", Longitude " + longitude;
+//    }

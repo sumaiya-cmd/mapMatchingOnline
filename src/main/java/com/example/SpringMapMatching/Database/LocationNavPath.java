@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 
+import org.geojson.Geometry;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -51,11 +52,17 @@ LocationNavPath {
         this.geometry = geo;
     }
 
+
     public Integer getH_ID() {
         return H_ID;
+//        Geo g = getGeo();
+//        return g.getH_ID();
     }
 
     public void setH_ID(Integer h_ID) {
+//        Geo g = getGeo();
+//        g.setH_ID(h_ID);
+//        H_ID = g.getH_ID();
         H_ID = h_ID;
     }
 

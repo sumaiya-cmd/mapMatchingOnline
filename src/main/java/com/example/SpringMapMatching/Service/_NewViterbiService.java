@@ -6,10 +6,7 @@ import com.example.SpringMapMatching.Model.Point;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 @Component
@@ -36,18 +33,26 @@ public class _NewViterbiService {
     public static ArrayList<ArrayList<Integer>> nearbySegments = new ArrayList<>();
     public static boolean checkIntersectionInsideWindow = false;
     public static boolean checkWindowExtention = false;
-    public static int extendedWindow = 15;
+    public static int extendedWindow = 5;
 
     public static boolean isBeginning = true;
     public static boolean isIntersection = false;
-    static int windowSize = 15;
+    static int windowSize = 5;
     static int startWindow = 0;
     static int endWindow = windowSize;
     public static int most_likely_path = -1;
+    public static int prev_MLP = -1;
+    public static Set<String> visited = new LinkedHashSet<>();
+    public static List<Point> leftPath = new ArrayList<>();
+    public static boolean uturn = false;
     static  int number = 0;
     public static int makeWindow = -1;
     public static List<Point> nearestPointsFromSegments = new ArrayList<>();
     public static List<Double> distanceFromPoint = new ArrayList<>();
+    public static int countOfVisited = 0;
+    public static Point firstInVisited = null;
+    public static Point lastInVisited = null;
+    public static Point secondlastInVisited = null;
     public List<Point> process(List<Double[]> gpsCoordinates) {
         int T = gpsCoordinates.size();
 
@@ -65,9 +70,9 @@ public class _NewViterbiService {
 
 
         if (isBeginning) {
-            for(Double[] gps : gpsCoordinates){
-                System.out.println(gps[0] + " " + gps[1]);
-            }
+//            for(Double[] gps : gpsCoordinates){
+//                System.out.println(gps[0] + " " + gps[1]);
+//            }
             mappedPoints = applyViterbi.applyViterbi(gpsCoordinates);
             printResult(mappedPoints);
             totalPoints.addAll(mappedPoints);
@@ -80,9 +85,9 @@ public class _NewViterbiService {
             }
             return mappedPoints;
         } else {
-            for(Double[] gps : gpsCoordinates){
-                System.out.println(gps[0] + " " + gps[1]);
-            }
+//            for(Double[] gps : gpsCoordinates){
+//                System.out.println(gps[0] + " " + gps[1]);
+//            }
             if(isIntersection){
                 mappedPoints = applyViterbi.applyViterbi(gpsCoordinates);
                 if(checkIntersectionInsideWindow || checkWindowExtention){
@@ -103,12 +108,26 @@ public class _NewViterbiService {
                 Point tbc = mappingWithoutViterbi.mapping(ls, segmentMapping);
 
                 if(tbc != null){
+                    if(tbc.getLongitude().equals(-1.0) && tbc.getLatitude().equals(-1.0)){
+                        return null;
+                    }
                     mappedPoints.add(tbc);
                     printResult(mappedPoints);
                     return mappedPoints;
                 }
                 else{
-                    System.out.println("abc");
+                    if(uturn){
+                        mappedPoints.addAll(leftPath);
+                        //System.out.println("lastLeftPath : ");
+                        //System.out.println(leftPath.get(leftPath.size() - 1));
+                        isIntersection = true;
+                        uturn = false;
+                        //System.out.println("returning till intersection...");
+                        //System.out.println("last mapped point : ");
+                        //System.out.println(mappedPoints.get(mappedPoints.size() - 1));
+                        return mappedPoints;
+                    }
+                    //System.out.println("abc");
                     isIntersection = true;
                     return null;
                 }

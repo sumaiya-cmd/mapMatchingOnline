@@ -3,6 +3,9 @@ package com.example.SpringMapMatching.Service;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
         // Given JSON data
@@ -27,8 +30,24 @@ public class Main {
         }
 
         // Print the 2D array
-        for (int i = 0; i < coordinates.length; i++) {
-            System.out.println("[" + coordinates[i][0] + ", " + coordinates[i][1] + "],");
+//        for (int i = 0; i < coordinates.length; i++) {
+//            System.out.println("[" + coordinates[i][0] + ", " + coordinates[i][1] + "],");
+//        }
+        List<Double> l1 = new ArrayList<>();
+        l1.add(2.0);
+        l1.add(3.0);
+        l1.add(4.0);
+
+        List<Double> l2 = new ArrayList<>();
+        l2.add(2.0);
+        l2.add(3.0);
+        l2.add(4.0);
+
+        if(l1 == l2){
+            System.out.println("so true");
+        }
+        else{
+            System.out.println("false");
         }
     }
 }
