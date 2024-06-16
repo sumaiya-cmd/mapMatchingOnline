@@ -26,6 +26,7 @@ public class ViterbiController {
     public static int curr = 0;
 //    public static List<List<Point>> result = new ArrayList<>();
     public static List<Point> result = new ArrayList<>();
+    public static List<Double[]> input = new ArrayList<>();
 
 
     @Autowired
@@ -36,8 +37,7 @@ public class ViterbiController {
     @PostMapping("/processCoordinates")
     public List<Point> processCoordinates(@RequestBody Double[] gpsCoordinates) {
         //observations = gpsCoordinates;
-
-
+        input.add(gpsCoordinates);
         if(_NewViterbiService.isBeginning){
             observations.add(gpsCoordinates);
             if(observations.size() == 5){
@@ -92,8 +92,18 @@ public class ViterbiController {
                 //System.out.println(observations.size());
                 List<Point> newResult = viterbiService.process(observations);
                 if(newResult != null){
+                    if(newResult.get(0).getLongitude().equals(-1.0) && newResult.get(0).getLatitude().equals(-1.0)){
+                        System.out.println("pqrst");
+                        System.out.println(observations.size());
+                        return result;
+                    }
                     result.addAll(newResult);
-                    observations.clear();
+                    if(!_NewViterbiService.uturn){
+                        observations.clear();
+                    }
+                    else{
+                        _NewViterbiService.uturn = false;
+                    }
                     //System.out.println(newResult.get(newResult.size() - 1));
                     //System.out.println("recieving till intersection...");
                     return result;
@@ -127,6 +137,12 @@ public class ViterbiController {
     public ResponseEntity<Map<String, String>> clearData(@RequestBody Map<String, String> requestBody) {
         Map<String, String> response = new HashMap<>();
         System.out.println("data cleared ------------------------");
+        for(Double[] input : input){
+            System.out.println("input.add(new Double[]{" + input[0] + "," + input[1] + "})");
+        }
+//        for(Point result : result){
+//            System.out.println("expected.add(new Double[]{" + result.getLongitude() + "," + result.getLatitude() + "})");
+//        }
         if (requestBody.containsKey("data") && "clear".equals(requestBody.get("data"))) {
             // Logic to clear data
             _NewViterbiService.isIntersection = false;

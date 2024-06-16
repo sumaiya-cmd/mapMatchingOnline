@@ -101,9 +101,6 @@ public class SpiceGarden_WindowsWithIntersection {
         expected.add(new Double[] {77.70950248037838, 12.958429093459216});
         expected.add(new Double[] {77.70950248037838, 12.958429093459216});
         expected.add(new Double[] {77.70946996163053, 12.95851782710308});
-
-
-
         Assertions.assertEquals(convert(expected) , convert(actual));
     }
     List<List<Double>> convert(List<Double[]> coords){
