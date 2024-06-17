@@ -91,6 +91,7 @@ public class _MappingWithoutViterbiService {
                 }
                 else{
                     if(_NewViterbiService.visited.contains(nearestPointOnMLP.getLongitude() + "#" + nearestPointOnMLP.getLatitude())){
+                        System.out.println("---------" + nearestPointOnMLP.getLongitude() + "," + nearestPointOnMLP.getLatitude());
                         if(nearestPointOnMLP.getLongitude().equals(_NewViterbiService.lastInVisited.getLongitude()) && nearestPointOnMLP.getLatitude().equals(_NewViterbiService.lastInVisited.getLatitude())){
                             //_NewViterbiService.visited.addAll(_CalculateResultService.visitedPoints(nearestPointOnMLP));
                             //_NewViterbiService.lastInVisited = nearestPointOnMLP;
@@ -111,6 +112,7 @@ public class _MappingWithoutViterbiService {
                     }
                     _NewViterbiService.visited.addAll(_CalculateResultService.visitedPoints(nearestPointOnMLP));
                     //_NewViterbiService.lastInVisited = nearestPointOnMLP;
+                    _NewViterbiService.countOfVisited = 0;
                     return nearestPointOnMLP;
                 }
             }

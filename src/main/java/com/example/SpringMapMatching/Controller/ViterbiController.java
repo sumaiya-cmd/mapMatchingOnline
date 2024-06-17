@@ -93,17 +93,17 @@ public class ViterbiController {
                 List<Point> newResult = viterbiService.process(observations);
                 if(newResult != null){
                     if(newResult.get(0).getLongitude().equals(-1.0) && newResult.get(0).getLatitude().equals(-1.0)){
-                        System.out.println("pqrst");
-                        System.out.println(observations.size());
+                        observations.clear();
                         return result;
                     }
                     result.addAll(newResult);
-                    if(!_NewViterbiService.uturn){
-                        observations.clear();
-                    }
-                    else{
-                        _NewViterbiService.uturn = false;
-                    }
+//                    if(!_NewViterbiService.uturn){
+//                        observations.clear();
+//                    }
+//                    else{
+//                        _NewViterbiService.uturn = false;
+//                    }
+                    observations.clear();
                     //System.out.println(newResult.get(newResult.size() - 1));
                     //System.out.println("recieving till intersection...");
                     return result;

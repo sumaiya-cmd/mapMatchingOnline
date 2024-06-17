@@ -108,9 +108,10 @@ public class _NewViterbiService {
                 Point tbc = mappingWithoutViterbi.mapping(ls, segmentMapping);
 
                 if(tbc != null){
-//                    if(tbc.getLongitude().equals(-1.0) && tbc.getLatitude().equals(-1.0)){
-//                        return null;
-//                    }
+                    if(tbc.getLongitude().equals(-1.0) && tbc.getLatitude().equals(-1.0)){
+                        mappedPoints.add(tbc);
+                        return mappedPoints;
+                    }
                     mappedPoints.add(tbc);
                     printResult(mappedPoints);
                     return mappedPoints;
@@ -121,7 +122,7 @@ public class _NewViterbiService {
                         //System.out.println("lastLeftPath : ");
                         //System.out.println(leftPath.get(leftPath.size() - 1));
                         isIntersection = true;
-                        //uturn = false;
+                        uturn = false;
                         //System.out.println("returning till intersection...");
                         //System.out.println("last mapped point : ");
                         //System.out.println(mappedPoints.get(mappedPoints.size() - 1));
