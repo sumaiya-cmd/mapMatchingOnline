@@ -18,9 +18,5 @@ public class SegmentGraphController {
         this.segmentGraph = segmentGraph;
     }
 
-    @GetMapping("/graph")
-    public Graph<Integer, DefaultEdge> getGraph() {
-        System.out.println("Graph called");
-        return segmentGraph.getGraph();
-    }
+
 }

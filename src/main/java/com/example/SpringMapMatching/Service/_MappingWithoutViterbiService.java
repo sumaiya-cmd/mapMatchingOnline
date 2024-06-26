@@ -100,7 +100,7 @@ public class _MappingWithoutViterbiService {
                         System.out.println(nearestPointOnMLP.getLongitude() + "," + nearestPointOnMLP.getLatitude());
                         System.out.println("visited contains the incoming point......");
                         _NewViterbiService.countOfVisited++;
-                        if(_NewViterbiService.countOfVisited >= 3){
+                        if(_NewViterbiService.countOfVisited > 3){
                             _NewViterbiService.uturn = true;
                             _NewViterbiService.leftPath.addAll(findingLeftPath(_NewViterbiService.firstInVisited, _NewViterbiService.lastInVisited, _NewViterbiService.secondlastInVisited, _NewViterbiService.visited));
                             return null;
@@ -113,6 +113,7 @@ public class _MappingWithoutViterbiService {
                     _NewViterbiService.visited.addAll(_CalculateResultService.visitedPoints(nearestPointOnMLP));
                     //_NewViterbiService.lastInVisited = nearestPointOnMLP;
                     _NewViterbiService.countOfVisited = 0;
+                    _NewViterbiService.uturn = false;
                     return nearestPointOnMLP;
                 }
             }

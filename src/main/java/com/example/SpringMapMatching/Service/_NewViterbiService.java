@@ -103,8 +103,8 @@ public class _NewViterbiService {
             }
             else{
                 List <Double> ls = new ArrayList<>();
-                ls.add(gpsCoordinates.get(0)[0]);
-                ls.add(gpsCoordinates.get(0)[1]);
+                ls.add(gpsCoordinates.get(gpsCoordinates.size() - 1)[0]);
+                ls.add(gpsCoordinates.get(gpsCoordinates.size() - 1)[1]);
                 Point tbc = mappingWithoutViterbi.mapping(ls, segmentMapping);
 
                 if(tbc != null){
@@ -119,13 +119,7 @@ public class _NewViterbiService {
                 else{
                     if(uturn){
                         mappedPoints.addAll(leftPath);
-                        //System.out.println("lastLeftPath : ");
-                        //System.out.println(leftPath.get(leftPath.size() - 1));
                         isIntersection = true;
-                        uturn = false;
-                        //System.out.println("returning till intersection...");
-                        //System.out.println("last mapped point : ");
-                        //System.out.println(mappedPoints.get(mappedPoints.size() - 1));
                         return mappedPoints;
                     }
                     //System.out.println("abc");

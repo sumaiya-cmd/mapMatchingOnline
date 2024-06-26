@@ -87,25 +87,22 @@ public class ViterbiController {
                 }
             }
             else{
-                //System.out.println(gpsCoordinates[0] + " " + gpsCoordinates[1]);
                 observations.add(gpsCoordinates);
-                //System.out.println(observations.size());
                 List<Point> newResult = viterbiService.process(observations);
                 if(newResult != null){
                     if(newResult.get(0).getLongitude().equals(-1.0) && newResult.get(0).getLatitude().equals(-1.0)){
-                        observations.clear();
+                        //observations.clear();
+                        System.out.println("size of observations : " + observations.size());
                         return result;
                     }
                     result.addAll(newResult);
-//                    if(!_NewViterbiService.uturn){
-//                        observations.clear();
-//                    }
-//                    else{
-//                        _NewViterbiService.uturn = false;
-//                    }
-                    observations.clear();
-                    //System.out.println(newResult.get(newResult.size() - 1));
-                    //System.out.println("recieving till intersection...");
+                    if(_NewViterbiService.uturn){
+                        System.out.println("size of observations : " + observations.size());
+                        _NewViterbiService.uturn = false;
+                    }
+                    else{
+                        observations.clear();
+                    }
                     return result;
                 }
                 else{
