@@ -80,4 +80,11 @@ public class _ConnectionOrIntersectionService {
 
         return false;
     }
+
+    public static boolean checkIntersectionPoint(List<Double> coordinate, RoadGraph roadGraph){
+        if(roadGraph.getRoadGraph().degreeOf(coordinate.get(0) + "#" + coordinate.get(1)) >= 3){
+            return true;
+        }
+        return false;
+    }
 }

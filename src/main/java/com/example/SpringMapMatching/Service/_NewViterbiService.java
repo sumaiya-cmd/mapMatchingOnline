@@ -33,11 +33,11 @@ public class _NewViterbiService {
     public static ArrayList<ArrayList<Integer>> nearbySegments = new ArrayList<>();
     public static boolean checkIntersectionInsideWindow = false;
     public static boolean checkWindowExtention = false;
-    public static int extendedWindow = 5;
+    public static int extendedWindow = 15;
 
     public static boolean isBeginning = true;
     public static boolean isIntersection = false;
-    static int windowSize = 5;
+    static int windowSize = 15;
     static int startWindow = 0;
     static int endWindow = windowSize;
     public static int most_likely_path = -1;
@@ -58,15 +58,16 @@ public class _NewViterbiService {
 
         List<Point> mappedPoints = new ArrayList<>();
         List<Point> totalPoints = new ArrayList<>();
-        segmentsMap = data.findAll();
-
-        if(!segmentsMap.isEmpty()) {
-            for (LocationNavPath segment : segmentsMap) {
-                segmentMapping.put(segment.getH_ID(), segment.getGeo().getCoordinates());
-            }
-        } else{
-            System.out.println("No segments found in the database.");
-        }
+//        segmentsMap = data.findAll();
+//
+//        if(!segmentsMap.isEmpty()) {
+//            System.out.println("making the segment mapping");
+//            for (LocationNavPath segment : segmentsMap) {
+//                segmentMapping.put(segment.getH_ID(), segment.getGeo().getCoordinates());
+//            }
+//        } else{
+//            System.out.println("No segments found in the database.");
+//        }
 
 
         if (isBeginning) {
@@ -128,7 +129,6 @@ public class _NewViterbiService {
                 }
             }
         }
-
     }
 
     public static void printResult(Point mapped_point){

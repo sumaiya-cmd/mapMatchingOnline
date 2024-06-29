@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import java.time.Instant;
 
 
-@Document(collection = "spiceGarden")
+@Document(collection = "RoadData")
 @JsonInclude(Include.NON_NULL)
 public class
 LocationNavPath {

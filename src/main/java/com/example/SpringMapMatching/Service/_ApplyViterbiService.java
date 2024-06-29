@@ -26,6 +26,7 @@ public class _ApplyViterbiService {
 
     public List<Point> applyViterbi(List<Double[]> gpsCoordinates) {
         //System.out.println("isBeginning : " +  _NewViterbiService.isBeginning);
+        System.out.println("here : " + gpsCoordinates.get(0)[0] + " " + gpsCoordinates.get(0)[1]);
         Map<Integer, Integer> segmentToState = _nearestThingsService.calculatingNearestSegment(gpsCoordinates);
         double[][] viterbi = new double[gpsCoordinates.size()][segmentToState.size()];
         int[][] backpointer = new int[gpsCoordinates.size()][segmentToState.size()];
@@ -93,8 +94,6 @@ public class _ApplyViterbiService {
 
 
                 cnt = moreConnectedVertices.size();
-                //System.out.println("cnt : " + cnt);
-                //System.out.println((1.00) / cnt);
                 for(int i = 0; i < initialClosestSegments.size(); i++){
                     double ep =  0.0;
                     Integer currClosestSegment = initialClosestSegments.get(i);

@@ -27,24 +27,26 @@ public class _CalculateResultService {
     public List<Point> calculateResult(double[][] viterbi, int[][] backpointer, Map<Integer, Integer> segmentToState, Point[][] closestPoints, List<Double[]> gpsCoordinates) {
         //System.out.println(gpsCoordinates.size());
         //System.out.println(gpsCoordinates.get(0)[0] + " " + gpsCoordinates.get(0)[1]);
-//        for(int k = 0; k < viterbi.length; k++){
-//            for(int l = 0; l < viterbi[k].length; l++){
-//                System.out.print(viterbi[k][l] + " ");
-//            }
-//            System.out.println("");
-//        }
-//        System.out.println(viterbi.length);
-//
-//        for(int k = 0; k < stateToSegmentID.size(); k++){
-//            System.out.print(stateToSegmentID + " ");
-//        }
-//
-//        for(int k = 0; k < viterbi.length; k++){
-//            for(int l = 0; l < viterbi[k].length; l++){
-//                System.out.print(stateToSegmentID.get(backpointer[k][l]) + " ");
-//            }
-//            System.out.println("");
-//        }
+        System.out.println("viterbi.....");
+        for(int k = 0; k < viterbi.length; k++){
+            for(int l = 0; l < viterbi[k].length; l++){
+                System.out.print(viterbi[k][l] + " ");
+            }
+            System.out.println("");
+        }
+        System.out.println(viterbi.length);
+
+        for(int k = 0; k < stateToSegmentID.size(); k++){
+            System.out.print(stateToSegmentID + " ");
+        }
+
+        System.out.println("backpointer.....");
+        for(int k = 0; k < viterbi.length; k++){
+            for(int l = 0; l < viterbi[k].length; l++){
+                System.out.print(stateToSegmentID.get(backpointer[k][l]) + " ");
+            }
+            System.out.println("");
+        }
         double maxProb = Double.NEGATIVE_INFINITY;
         int maxState = -1;
 
@@ -110,7 +112,7 @@ public class _CalculateResultService {
                     }
                     _NewViterbiService.makeWindow = t;
                     _NewViterbiService.checkIntersectionInsideWindow = true;
-                    _NewViterbiService.extendedWindow = 5;
+                    _NewViterbiService.extendedWindow = 15;
                     _NewViterbiService.prev_MLP = _NewViterbiService.most_likely_path;
                     _NewViterbiService.most_likely_path = stateToSegmentID.get(maxState);
                     _NewViterbiService.visited.clear();
@@ -159,7 +161,7 @@ public class _CalculateResultService {
                 //System.out.println(result.get(result.size() - 1));
                 _NewViterbiService.visited.addAll(visitedPoints(result));
             }
-            gpsErrorInitial = error / (5.00);
+            gpsErrorInitial = error / (15.00);
             _NewViterbiService.checkWindowExtention = false;
             return result;
         } else {
@@ -172,7 +174,7 @@ public class _CalculateResultService {
                 }
             }
 
-            if ((minErrorState == maxState) || _NewViterbiService.extendedWindow >= 15) {
+            if ((minErrorState == maxState) || _NewViterbiService.extendedWindow >= 45) {
                 for (int t = 0; t < path.length; t++) {
                     result.add(closestPoints[t][path[t]]);
                 }
@@ -186,15 +188,15 @@ public class _CalculateResultService {
                 } else {
                     _NewViterbiService.visited.addAll(visitedPoints(result));
                 }
-                _NewViterbiService.extendedWindow = 5;
+                _NewViterbiService.extendedWindow = 15;
                 _NewViterbiService.checkWindowExtention = false;
                 _NewViterbiService.checkIntersectionInsideWindow = false;
                 //System.out.println(_NewViterbiService.most_likely_path);
                 return result;
             } else {
                 result = null;
-                int window = ViterbiController.observations.size() + 5;
-                _NewViterbiService.extendedWindow = Math.min(window, 15);
+                int window = ViterbiController.observations.size() + 15;
+                _NewViterbiService.extendedWindow = Math.min(window, 45);
                 _NewViterbiService.checkWindowExtention = true;
                 return result;
             }
@@ -346,6 +348,15 @@ public class _CalculateResultService {
                 endIndex = i;
             }
         }
+
+        if(beginIndex == -1){
+            beginIndex = 0;
+        }
+        if(endIndex == -1){
+            endIndex = segmentLength - 1;
+        }
+
+        System.out.println(beginIndex + "," + endIndex);
 
         if(beginIndex < endIndex){
             for(int i = beginIndex; i <= endIndex; i++){

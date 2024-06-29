@@ -25,7 +25,7 @@ public class _NearestThingsService {
         int countOfState = 0;
 
         for (int i = 0; i < gpsCoordinates.size(); i++) {
-            List<LocationNavPath> nearestRoadSegments = data.findByLocationNear(gpsCoordinates.get(i)[0], gpsCoordinates.get(i)[1], 20);
+            List<LocationNavPath> nearestRoadSegments = data.findByLocationNear(gpsCoordinates.get(i)[0], gpsCoordinates.get(i)[1], 100);
             ArrayList<Integer> segments = new ArrayList<>();
             for (LocationNavPath segment : nearestRoadSegments) {
                 int segmentID = segment.getH_ID();
@@ -54,6 +54,8 @@ public class _NearestThingsService {
                 closestPoints[i][segmentToState.get(segmentID)] = findNearestPointFromRoad(new Point(gpsCoordinates.get(i)[0], gpsCoordinates.get(i)[1]), geoCoordinates);
             }
         }
+        System.out.println("Closest Point for : " + gpsCoordinates + " is : " + closestPoints);
+
         return closestPoints;
     }
 

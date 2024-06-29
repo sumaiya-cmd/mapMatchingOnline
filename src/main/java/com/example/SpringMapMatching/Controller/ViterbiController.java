@@ -3,6 +3,7 @@ package com.example.SpringMapMatching.Controller;
 import com.example.SpringMapMatching.Model.Point;
 import com.example.SpringMapMatching.Service._ApplyViterbiService;
 import com.example.SpringMapMatching.Service._NewViterbiService;
+import com.example.SpringMapMatching.Service._ShortestPathService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,10 +38,11 @@ public class ViterbiController {
     @PostMapping("/processCoordinates")
     public List<Point> processCoordinates(@RequestBody Double[] gpsCoordinates) {
         //observations = gpsCoordinates;
+        System.out.println("inside controller : " + gpsCoordinates[0] + ", " + gpsCoordinates[1]);
         input.add(gpsCoordinates);
         if(_NewViterbiService.isBeginning){
             observations.add(gpsCoordinates);
-            if(observations.size() == 5){
+            if(observations.size() == 15){
                result.addAll(viterbiService.process(observations));
                 if(!_NewViterbiService.checkIntersectionInsideWindow)
                 {
@@ -148,7 +150,7 @@ public class ViterbiController {
             result.clear();
             _NewViterbiService.checkWindowExtention = false;
             _NewViterbiService.checkIntersectionInsideWindow = false;
-            _NewViterbiService.extendedWindow = 5;
+            _NewViterbiService.extendedWindow = 15;
             observations.clear();
             _NewViterbiService.distanceFromPoint.clear();
             _NewViterbiService.nearestPointsFromSegments.clear();
@@ -157,6 +159,11 @@ public class ViterbiController {
             _NewViterbiService.prev_MLP = -1;
             _NewViterbiService.countOfVisited = 0;
             _NewViterbiService.leftPath.clear();
+            _ShortestPathService.destination = null;
+            _ShortestPathService.source = null;
+            _ShortestPathService.restrictedSegment = -1;
+            _ShortestPathService.restrictedPoints.clear();
+            _ShortestPathService.alertPoints.clear();
             response.put("message", "Data cleared successfully");
             return ResponseEntity.ok(response);
         } else {

@@ -29,7 +29,7 @@ public class _MappingWithoutViterbiService {
 
 
     public Point mapping(List<Double> currObs, Map<Integer, List<List<Double>>> segmentMapping) {
-        List<LocationNavPath> nearestSegment = data.findByLocationNear(currObs.get(0), currObs.get(1), 20); // Adjust max distance as needed
+        List<LocationNavPath> nearestSegment = data.findByLocationNear(currObs.get(0), currObs.get(1), 100); // Adjust max distance as needed
         Point mappedPoint = null;
 
         int currNearestSegmentID = nearestSegment.get(0).getH_ID();
@@ -121,7 +121,7 @@ public class _MappingWithoutViterbiService {
         }
     }
 
-    private static Point findNearestPointFromRoad(Point p, List<List<Double>> roadSegment) {
+    public static Point findNearestPointFromRoad(Point p, List<List<Double>> roadSegment) {
         Point result = null;
         Double minDistance = Double.MAX_VALUE;
 
