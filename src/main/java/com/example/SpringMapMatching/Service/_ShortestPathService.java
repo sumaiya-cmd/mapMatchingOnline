@@ -18,11 +18,15 @@ public class _ShortestPathService {
     public static Point source = null;
     public static Point destination = null;
     private static RoadGraph roadGraph;
+    private static SegmentGraph segmentGraph;
+    public static boolean isFirstSource = true;
+    public static int currentSegmentId = -1;
 
     @Autowired
     public _ShortestPathService(Data data, RoadGraph roadGraph, SegmentGraph segmentGraph){
         this.data = data;
         this.roadGraph = roadGraph;
+        this.segmentGraph = segmentGraph;
     }
 
     //static Map<Integer, List<List<Double>>> segmentMapping = new HashMap<>();
@@ -31,7 +35,14 @@ public class _ShortestPathService {
     public static Set<String> alertPoints = new HashSet<>();
 
     public List<Point> findShortestDistance(Point sourceOnMap, Point destinationOnMap){
-        Point source = findPointOnGraph(sourceOnMap);
+        Point source = null;
+        if(isFirstSource){
+            source = findPointOnGraph(sourceOnMap);
+            isFirstSource = false;
+        }
+        else{
+            source = findPointOnGraphAfterCheckingConnection(sourceOnMap);
+        }
         Point destination = findPointOnGraph(destinationOnMap);
 
         String sourceVertex = source.getLongitude() + "#" + source.getLatitude();
@@ -58,11 +69,38 @@ public class _ShortestPathService {
 
     public static Point findPointOnGraph(Point coordinate){
         List<LocationNavPath> nearestRoadSegmentToCoordinate = data.findByLocationNear(coordinate.getLongitude(), coordinate.getLatitude(), 100);
-
         int id = nearestRoadSegmentToCoordinate.get(0).getH_ID();
+        if(isFirstSource){
+            currentSegmentId = id;
+        }
+        System.out.println("id :" + id + " currentSegmentId : " + currentSegmentId);
         List<List<Double>> roadSegment = _NewViterbiService.segmentMapping.get(id);
         Point closestPoint = _MappingWithoutViterbiService.findNearestPointFromRoad(coordinate, roadSegment);
         return closestPoint;
+    }
+
+    public static Point findPointOnGraphAfterCheckingConnection(Point coordinate){
+        List<LocationNavPath> nearestRoadSegmentToCoordinate = data.findByLocationNear(coordinate.getLongitude(), coordinate.getLatitude(), 100);
+
+        for(LocationNavPath segment : nearestRoadSegmentToCoordinate){
+            int segmentId = segment.getH_ID();
+            System.out.println("curr segment id : " + currentSegmentId + "segment id :" + segmentId);
+            if(segmentId == currentSegmentId){
+                List<List<Double>> roadSegment = _NewViterbiService.segmentMapping.get(segmentId);
+                Point closestPoint = _MappingWithoutViterbiService.findNearestPointFromRoad(coordinate, roadSegment);
+                return closestPoint;
+            }
+            else{
+                LinkedHashSet<Integer> connectedVertices = _ConnectionOrIntersectionService.getVerticesAtDistance(segmentGraph, segmentId, 3);
+                if(connectedVertices.contains(currentSegmentId)){
+                    currentSegmentId = segmentId;
+                    List<List<Double>> roadSegment = _NewViterbiService.segmentMapping.get(segmentId);
+                    Point closestPoint = _MappingWithoutViterbiService.findNearestPointFromRoad(coordinate, roadSegment);
+                    return closestPoint;
+                }
+            }
+        }
+        return null;
     }
 
     public static Set<String> findRestrictedPoints(int restrictedSegment){

@@ -6,10 +6,13 @@ import jakarta.annotation.PostConstruct;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.traverse.BreadthFirstIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class SegmentGraph{
@@ -74,6 +77,8 @@ public class SegmentGraph{
         //System.out.println("segment graph made");
         return graph;
     }
+
+
 
     public void printVertexCount(){
 //        System.out.println("Segment Vertices: " + graph.vertexSet().size());

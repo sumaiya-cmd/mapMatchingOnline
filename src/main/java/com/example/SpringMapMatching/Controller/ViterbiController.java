@@ -164,6 +164,8 @@ public class ViterbiController {
             _ShortestPathService.restrictedSegment = -1;
             _ShortestPathService.restrictedPoints.clear();
             _ShortestPathService.alertPoints.clear();
+            _ShortestPathService.isFirstSource = true;
+            _ShortestPathService.currentSegmentId = -1;
             response.put("message", "Data cleared successfully");
             return ResponseEntity.ok(response);
         } else {

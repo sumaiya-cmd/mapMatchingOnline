@@ -213,7 +213,7 @@ public class _CalculateResultService {
             }
         }
 
-        Set<Integer> moreConnectedVertices = _ApplyViterbiService.getVerticesAtDistance(segmentGraph, currSegment, 4);
+        Set<Integer> moreConnectedVertices = _ConnectionOrIntersectionService.getVerticesAtDistance(segmentGraph, currSegment, 4);
         DijkstraShortestPath<Integer, DefaultEdge> dijkstraAlg = new DijkstraShortestPath<>(SegmentGraph.getGraph());
 
         if (moreConnectedVertices.contains(prevSegment)) {

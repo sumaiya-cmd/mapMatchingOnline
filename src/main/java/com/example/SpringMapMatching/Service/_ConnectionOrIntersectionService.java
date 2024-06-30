@@ -2,9 +2,12 @@ package com.example.SpringMapMatching.Service;
 
 import com.example.SpringMapMatching.Database.Data;
 import org.jgrapht.graph.DefaultEdge;
+import org.jgrapht.traverse.BreadthFirstIterator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -86,5 +89,27 @@ public class _ConnectionOrIntersectionService {
             return true;
         }
         return false;
+    }
+
+    public static LinkedHashSet<Integer> getVerticesAtDistance(SegmentGraph segmentGraph, int sourceVertex, int distance) {
+        LinkedHashSet<Integer> vertices = new LinkedHashSet<>();
+
+        // Perform BFS starting from the source vertex
+        BreadthFirstIterator<Integer, DefaultEdge> bfsIterator = new BreadthFirstIterator<>(segmentGraph.getGraph(), sourceVertex);
+
+        // Iterate over vertices at each level of the BFS tree
+        while (bfsIterator.hasNext()) {
+            Integer vertex = bfsIterator.next();
+            int currentDistance = bfsIterator.getDepth(vertex);
+            if (currentDistance >= 0 && currentDistance <= distance) {
+                System.out.println("connected : " + vertex);
+                vertices.add(vertex);
+            }
+            if (currentDistance > distance) {
+                break;
+            }
+        }
+
+        return vertices;
     }
 }

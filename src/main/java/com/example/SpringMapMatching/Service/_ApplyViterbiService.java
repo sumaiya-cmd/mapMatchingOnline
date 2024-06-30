@@ -86,7 +86,7 @@ public class _ApplyViterbiService {
                 int cnt = 0;
 
 
-                Set<Integer> moreConnectedVertices = getVerticesAtDistance(segmentGraph, _NewViterbiService.most_likely_path, 3);
+                Set<Integer> moreConnectedVertices = _ConnectionOrIntersectionService.getVerticesAtDistance(segmentGraph, _NewViterbiService.most_likely_path, 3);
                 //System.out.println("more connections");
 //                for(Integer k : moreConnectedVertices){
 //                    System.out.print(k + " ");
@@ -153,24 +153,4 @@ public class _ApplyViterbiService {
         return result;
     }
 
-    public static Set<Integer> getVerticesAtDistance(SegmentGraph segmentGraph, int sourceVertex, int distance) {
-        Set<Integer> vertices = new HashSet<>();
-
-        // Perform BFS starting from the source vertex
-        BreadthFirstIterator<Integer, DefaultEdge> bfsIterator = new BreadthFirstIterator<>(segmentGraph.getGraph(), sourceVertex);
-
-        // Iterate over vertices at each level of the BFS tree
-        while (bfsIterator.hasNext()) {
-            Integer vertex = bfsIterator.next();
-            int currentDistance = bfsIterator.getDepth(vertex);
-            if (currentDistance >= 0 && currentDistance <= distance) {
-                vertices.add(vertex);
-            }
-            if (currentDistance > distance) {
-                break;
-            }
-        }
-
-        return vertices;
-    }
 }
