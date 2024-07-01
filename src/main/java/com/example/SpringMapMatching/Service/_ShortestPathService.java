@@ -330,6 +330,7 @@ public class _ShortestPathService {
         // to get the final answer and then return the array.
 
         Collections.reverse(path);
+        path.add(new Point(dist.get(destination), 0.00));
         return path;
     }
 
@@ -419,6 +420,7 @@ public class _ShortestPathService {
         // Since the path stored is in a reverse order, we reverse the array
         // to get the final answer and then return the array.
         Collections.reverse(path);
+        path.add(new Point(dist.get(destination), 0.00));
         return path;
     }
 
@@ -428,6 +430,7 @@ public class _ShortestPathService {
         Graph<String, DefaultWeightedEdge> graph = roadGraph.getRoadGraph();
         DijkstraShortestPath<String, DefaultWeightedEdge> dijkstraShortestPath = new DijkstraShortestPath<>(graph);
         List<String> shortestPathInStringFormat = dijkstraShortestPath.getPath(source, destination).getVertexList();
+        double shortestDistance = dijkstraShortestPath.getPathWeight(source, destination); // Get the shortest distance
 
         List<Point> shortestPath = new ArrayList<>();
 
@@ -435,6 +438,7 @@ public class _ShortestPathService {
             String[] parts = vertexInPath.split("#", 2);
             shortestPath.add(new Point(Double.parseDouble(parts[0]), Double.parseDouble(parts[1])));
         }
+        shortestPath.add(new Point(shortestDistance, 0.00));
         return shortestPath;
     }
 

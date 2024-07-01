@@ -33,11 +33,11 @@ public class _NewViterbiService {
     public static ArrayList<ArrayList<Integer>> nearbySegments = new ArrayList<>();
     public static boolean checkIntersectionInsideWindow = false;
     public static boolean checkWindowExtention = false;
-    public static int extendedWindow = 15;
+    public static int extendedWindow = 5;
 
     public static boolean isBeginning = true;
     public static boolean isIntersection = false;
-    static int windowSize = 15;
+    static int windowSize = 5;
     static int startWindow = 0;
     static int endWindow = windowSize;
     public static int most_likely_path = -1;

@@ -42,7 +42,7 @@ public class ViterbiController {
         input.add(gpsCoordinates);
         if(_NewViterbiService.isBeginning){
             observations.add(gpsCoordinates);
-            if(observations.size() == 15){
+            if(observations.size() == 5){
                result.addAll(viterbiService.process(observations));
                 if(!_NewViterbiService.checkIntersectionInsideWindow)
                 {
@@ -150,7 +150,7 @@ public class ViterbiController {
             result.clear();
             _NewViterbiService.checkWindowExtention = false;
             _NewViterbiService.checkIntersectionInsideWindow = false;
-            _NewViterbiService.extendedWindow = 15;
+            _NewViterbiService.extendedWindow = 5;
             observations.clear();
             _NewViterbiService.distanceFromPoint.clear();
             _NewViterbiService.nearestPointsFromSegments.clear();

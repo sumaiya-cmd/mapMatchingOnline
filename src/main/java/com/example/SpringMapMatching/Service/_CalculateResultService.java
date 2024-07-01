@@ -112,7 +112,7 @@ public class _CalculateResultService {
                     }
                     _NewViterbiService.makeWindow = t;
                     _NewViterbiService.checkIntersectionInsideWindow = true;
-                    _NewViterbiService.extendedWindow = 15;
+                    _NewViterbiService.extendedWindow = 5;
                     _NewViterbiService.prev_MLP = _NewViterbiService.most_likely_path;
                     _NewViterbiService.most_likely_path = stateToSegmentID.get(maxState);
                     _NewViterbiService.visited.clear();
@@ -161,7 +161,7 @@ public class _CalculateResultService {
                 //System.out.println(result.get(result.size() - 1));
                 _NewViterbiService.visited.addAll(visitedPoints(result));
             }
-            gpsErrorInitial = error / (15.00);
+            gpsErrorInitial = error / (5.00);
             _NewViterbiService.checkWindowExtention = false;
             return result;
         } else {
@@ -174,7 +174,7 @@ public class _CalculateResultService {
                 }
             }
 
-            if ((minErrorState == maxState) || _NewViterbiService.extendedWindow >= 45) {
+            if ((minErrorState == maxState) || _NewViterbiService.extendedWindow >= 15) {
                 for (int t = 0; t < path.length; t++) {
                     result.add(closestPoints[t][path[t]]);
                 }
@@ -188,15 +188,15 @@ public class _CalculateResultService {
                 } else {
                     _NewViterbiService.visited.addAll(visitedPoints(result));
                 }
-                _NewViterbiService.extendedWindow = 15;
+                _NewViterbiService.extendedWindow = 5;
                 _NewViterbiService.checkWindowExtention = false;
                 _NewViterbiService.checkIntersectionInsideWindow = false;
                 //System.out.println(_NewViterbiService.most_likely_path);
                 return result;
             } else {
                 result = null;
-                int window = ViterbiController.observations.size() + 15;
-                _NewViterbiService.extendedWindow = Math.min(window, 45);
+                int window = ViterbiController.observations.size() + 5;
+                _NewViterbiService.extendedWindow = Math.min(window, 15);
                 _NewViterbiService.checkWindowExtention = true;
                 return result;
             }

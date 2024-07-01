@@ -36,6 +36,10 @@ public class ShortestPathController {
             return shortestPath;
         }
         else{
+            if((gpsCoordinates[0] == 0.00) && (gpsCoordinates[1] == 0.00)){
+                shortestPath = shortestPathService.findShortestDistance(source, destination);
+                return shortestPath;
+            }
             source = new Point(gpsCoordinates[0], gpsCoordinates[1]);
             System.out.println(source.getLongitude() + "," + source.getLatitude());
             System.out.println(destination.getLongitude() + "," + destination.getLatitude());
